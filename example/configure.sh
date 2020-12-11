@@ -8,7 +8,7 @@ step() {
 
 
 step 'Set up timezone'
-setup-timezone -z Europe/Prague
+setup-timezone -z Europe/Moscow
 
 step 'Set up networking'
 cat > /etc/network/interfaces <<-EOF
@@ -32,3 +32,24 @@ rc-update add crond default
 rc-update add net.eth0 default
 rc-update add net.lo boot
 rc-update add termencoding boot
+
+setup-cloud-init
+rc-update add cloud-init default
+
+rc-update add qemu-guest-agent default
+
+rc-update add sshd default
+
+echo "UsePAM yes" >> /etc/ssh/sshd_config
+
+#adduser -D alpine -G wheel
+#sed -i 's/alpine:!/alpine:*/g' /etc/shadow
+#sed -i '/PermitRootLogin yes/d' /etc/ssh/sshd_config
+
+rm -f /var/cache/apk/*
+
+dd if=/dev/zero of=/EMPTY bs=1M
+rm -f /EMPTY
+sync
+sync
+sync

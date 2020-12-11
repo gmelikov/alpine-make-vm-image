@@ -85,7 +85,7 @@
 # https://github.com/alpinelinux/alpine-make-vm-image
 #---help---
 set -eu
-
+set -o xtrace
 # Some distros (e.g. Arch Linux) does not have /bin or /sbin in PATH.
 PATH="$PATH:/usr/sbin:/usr/bin:/sbin:/bin"
 
@@ -416,6 +416,8 @@ einfo "Formatting image to $ROOTFS"
 # -E nodiscard / -K - do not attempt to discard blocks at mkfs time (it's
 # useless for NBD image and prints confusing error).
 [ "$ROOTFS" = ext4 ] && mkfs_args='-O ^64bit -E nodiscard' || mkfs_args='-K'
+
+sleep 2
 
 mkfs.$ROOTFS -L root $mkfs_args "$nbd_dev"
 

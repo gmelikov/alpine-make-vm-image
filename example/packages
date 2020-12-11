@@ -1,6 +1,7 @@
 chrony
 less
-logrotate
+cloud-init
 openssh
-ssmtp
-sudo
+openssh-server-pam
+acpi
+qemu-guest-agent
